@@ -10,7 +10,7 @@ identifier="com.github.TonyLiu2ca"
 version="1.1"
 
 homePath=$(dirname "$0")
-pushd "$homePath" 1>/dev/null 2>1
+pushd "$homePath/.." 1>/dev/null 2>1
 if [ "$EUID" -ne 0 ];then echo "Please run as root"; exit; fi
 
 # Delete extra file.
