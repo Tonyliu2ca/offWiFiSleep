@@ -14,7 +14,7 @@ pushd "$homePath/.." &>/dev/null
 if [ "$EUID" -ne 0 ];then echo "Please run as root"; exit; fi
 
 # Delete extra file.
-find . -name '.DS_Store' -type f -delete >&- 2>&-
+find . -name '.DS_Store' -type f -delete &>/dev/null
 
 # Correct files' permission.
 chflags -R noschg "./root/Library/Application Support/$package"
@@ -29,8 +29,6 @@ chmod 644 "./root/Library/LaunchDaemons/${identifier}.${package}.plist"
 # Create the installation package.
 pkgbuild --root root --scripts scripts --identifier "${identifier}.${package}" --version "$version" --quiet ${package}.pkg
 
-chmod 777 "${package}.pkg"
-chown `id -un` "${package}.pkg"
-mv -f "${package}.pkg" build
+chmod 777 "${package}.pkg"; chown `id -un` "${package}.pkg"; mv -f "${package}.pkg" build
 # done
 popd &>/dev/null
