@@ -9,6 +9,7 @@ homePath=$(dirname "$0");pushd "$homePath"
 logger -i "offWiFiSleep->wakeup:进程开始"
 onoff="on"
 [[ -e .offWiFiSleep.ini ]] && onoff=$(grep "setWiFi" .offWiFiSleep.ini | awk -F "=" '{print $2}')
+<<<<<<< HEAD
 logger -i "offWiFiSleep->wakeup:   休眠前WiFi服务状态是${onoff}."
 status=$(networksetup -getnetworkserviceenabled Wi-Fi)
 [[ "$status" = "Enabled" ]] && status="on" || status="off"
@@ -17,3 +18,8 @@ logger -i "offWiFiSleep->wakeup:   现在WiFi服务状态是${status}."
 logger -i "offWiFiSleep->wakeup:   设置WiFi服务为${onoff}."
 logger -i "offWiFiSleep->wakeup:进程结束"
 sleep 2
+=======
+networksetup -setnetworkserviceenabled Wi-Fi $(onoff)
+logger -i "offWiFiSleep: 电脑被唤醒, WiFi服务被设置为${ofoff}."
+sleep 2
+>>>>>>> 3f27f239d75391d27732c097def9bdd2a4a261d4
