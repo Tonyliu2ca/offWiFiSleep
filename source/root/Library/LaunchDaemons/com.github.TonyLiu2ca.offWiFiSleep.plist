@@ -6,10 +6,10 @@
 	<string>com.github.TonyLiu2ca.offWiFiSleep</string>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/Library/Application\ Support/offWiFiSleep/</string>
+		<string>/Library/offWiFiSleep/sleepwatcher</string>
 		<string>-V</string>
-		<string>-s /Library/Application\ Support/offWiFiSleep/.sleep</string>
-		<string>-w /Library/Application\ Support/offWiFiSleep/.wakeup</string>
+		<string>-s /Library/offWiFiSleep/.sleep</string>
+		<string>-w /Library/offWiFiSleep/.wakeup</string>
 	</array>
 	<key>RunAtLoad</key>
 	<true/>

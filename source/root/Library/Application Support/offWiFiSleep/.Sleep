@@ -4,17 +4,30 @@
 #
 # Tony Liu, 2017-, TonyLiu2ca@yahoo.com
 #
+
 homePath=$(dirname "$0");pushd "$homePath"
-#WiFi=$(networksetup -getnetworkserviceenabled Wi-Fi)
-#[ "$WiFi" = "Disabled" ] && WiFi="off" || WiFi="on"
-#echo "WiFi=$WiFi" > .offWiFiSleep.ini
-echo "setWiFi=on" > .offWiFiSleep.ini
-if [ -e ./offWiFiSleep_settings.ini ]; then
-   disable=$(grep "WiFi_Sleep" ./offWiFiSleep_settings.ini | awk -F "=" '{print $2}')
-   [[ $(pmset -g ps | grep "Battery Power") ]] && networksetup -setnetworkserviceenabled Wi-Fi $disable;
-   logger -i "offWiFiSleep: 电脑即将进入睡眠, 现在WiFi服务是-$WiFi-的，睡眠前对WiFi服务进行-$disable-操作."
+logger -i "offWiFiSleep->sleep:进程开始."
+status=$(networksetup -getnetworkserviceenabled Wi-Fi)
+[[ "$status" = "Enabled" ]] && status="on" || status="off"
+echo "setWiFi=$status" > .offWiFiSleep.ini
+logger -i "offWiFiSleep->sleep:   现在WIFi服务状态=$status."
+
+if [ -e "offWiFiSleep_settings.ini" ]; then
+   setStatus=$(grep "WiFi_Sleep" ./offWiFiSleep_settings.ini | awk -F "=" '{print $2}')
+   logger -i "offWiFiSleep->sleep:   offWiFiSleep_settings.ini文件设置：WiFi_Sleep=$setStatus."
+   if [[ "$setStatus" = "YES" ]]; then
+      setStatus="off"
+      if [[ $(pmset -g ps | grep "Battery Power") ]]; then
+         networksetup -setnetworkserviceenabled Wi-Fi $setStatus;
+         logger -i "offWiFiSleep->sleep:   设置WiFi服务为$setStatus."
+      else
+         logger -i "offWiFiSleep->sleep:   没有使用电池, WiFi服务保持$status."
+      fi
+   else
+      logger -i "offWiFiSleep->sleep:   因为WiFi_Sleep=$setStatus,所以不对WiFI服务操作."
+   fi
 else
-   logger -i "offWiFiSleep: offWiFiSleep_settings.ini设置文件不存在，不对WiFi服务操作."
-   disable="on"
+   logger -i "offWiFiSleep->sleep:   offWiFiSleep_settings.ini配置文件不存在,不做任何操作."
 fi
+logger -i "offWiFiSleep->sleep:进程结束."
 sleep 2
