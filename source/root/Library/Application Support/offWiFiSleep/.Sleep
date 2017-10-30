@@ -17,3 +17,4 @@ else
    logger -i "offWiFiSleep: offWiFiSleep_settings.ini设置文件不存在，不对WiFi服务操作."
    disable="on"
 fi
+sleep 2
