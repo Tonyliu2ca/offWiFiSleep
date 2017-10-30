@@ -11,11 +11,13 @@ Turn Wi-Fi service off on sleep, back on when wake up.
 
 ## 卸载：
 为了方便卸载，最直接的方法是执行下面的命令：
+```
 sudo "/Library/Application Support/offWifiSleep/uninstall.sh"
+```
 
 ## 禁止/准许：
 有的时候你可能需要禁止这个操作，而又不想从系统中彻底卸载它，那么可以运行下面的命令：
-sudo launchctl unload -w /Library/LaunchDaemons/com.github.TonyLiu2ca.offWiFiSleep.plist
+```sudo launchctl unload -w /Library/LaunchDaemons/com.github.TonyLiu2ca.offWiFiSleep.plist```
 再次开启的命令是：
-sudo launchctl load -w /Library/LaunchDaemons/com.github.TonyLiu2ca.offWiFiSleep.plist
+```sudo launchctl load -w /Library/LaunchDaemons/com.github.TonyLiu2ca.offWiFiSleep.plist```
 注：当运行上述命令的时候，它可能会询问当前管理员帐户的密码，以便提升权限进行修改
