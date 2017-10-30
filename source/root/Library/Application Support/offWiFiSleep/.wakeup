@@ -1,0 +1,12 @@
+#!/bin/bash
+#
+# Wakeup action - part of offWiFiSleep package
+#
+# Tony Liu, 2017-, TonyLiu2ca@yahoo.com
+# Version 1.0
+#
+homePath=$(dirname "$0");pushd "$homePath"
+onoff="on"
+[[ -e .offWiFiSleep.ini ]] && onoff=$(grep "setWiFi" .offWiFiSleep.ini | awk -F "=" '{print $2}')
+networksetup -setnetworkserviceenabled Wi-Fi $(onoff)
+logger -i "offWiFiSleep: 电脑被唤醒, WiFi服务被设置为${ofoff}."

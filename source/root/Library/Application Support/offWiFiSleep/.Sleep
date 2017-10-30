@@ -1,0 +1,19 @@
+#!/bin/bash
+#
+# Sleep action
+#
+# Tony Liu, 2017-, TonyLiu2ca@yahoo.com
+#
+homePath=$(dirname "$0");pushd "$homePath"
+#WiFi=$(networksetup -getnetworkserviceenabled Wi-Fi)
+#[ "$WiFi" = "Disabled" ] && WiFi="off" || WiFi="on"
+#echo "WiFi=$WiFi" > .offWiFiSleep.ini
+echo "setWiFi=on" > .offWiFiSleep.ini
+if [ -e ./offWiFiSleep_settings.ini ]; then
+   disable=$(grep "WiFi_Sleep" ./offWiFiSleep_settings.ini | awk -F "=" '{print $2}')
+   [[ $(pmset -g ps | grep "Battery Power") ]] && networksetup -setnetworkserviceenabled Wi-Fi $disable;
+   logger -i "offWiFiSleep: 电脑即将进入睡眠, 现在WiFi服务是-$WiFi-的，睡眠前对WiFi服务进行-$disable-操作."
+else
+   logger -i "offWiFiSleep: offWiFiSleep_settings.ini设置文件不存在，不对WiFi服务操作."
+   disable="on"
+fi
