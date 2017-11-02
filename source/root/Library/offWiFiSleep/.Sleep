@@ -29,8 +29,5 @@ if [ -e "offWiFiSleep_settings.ini" ]; then
 else
    logger -i "offWiFiSleep->sleep:   offWiFiSleep_settings.ini配置文件不存在,不做任何操作."
 fi
-<<<<<<< HEAD
 logger -i "offWiFiSleep->sleep:进程结束."
-=======
->>>>>>> 3f27f239d75391d27732c097def9bdd2a4a261d4
 sleep 2

@@ -18,25 +18,27 @@
 #    install the package
 #
 # Version:
-#    1.0.1
-#    
+#    1.0.1 Initial release
+#    1.1.0 minior fixes
+#
 # Author:
 #    Tony Liu, 2017-
 #    TonyLiu2ca@yahoo.com
 # ----------------------------------------------------------------------------------------
-chmod -RN ./root/Library/Application\ Support/offWiFiSleep
-chflags -R schg ./root/Library/Application\ Support/offWiFiSleep/.sleep
-chflags -R schg ./root/Library/Application\ Support/offWiFiSleep/.wakeup
-chmod 777 ./root/Library/Application\ Support/offWiFiSleep/offWiFiSleep_Settings.ini
-#rm -f ./scripts/.DS_Store
-rm -f /Library/LaunchDaemons/de.bernhard-baehr.sleepwatcher.plist 
+# Set permissions
+chmod -RN /Library/offWiFiSleep
+chflags -R schg /Library/offWiFiSleep/.sleep
+chflags -R schg /Library/offWiFiSleep/.wakeup
+chmod 777 /Library/offWiFiSleep/offWiFiSleep_Settings.ini
 
-# remove others
-/bin/launchctl unload -w /Library/LaunchDaemons/de.bernhard-baehr.sleepwatcher.plist 1>&- 2>&1
-rm -f /etc/rc.sleep /etc/rc.wakeup  1>&- 2>&1
+# clean up others
+/bin/launchctl unload -w /Library/LaunchDaemons/de.bernhard-baehr.sleepwatcher.plist &>/dev/null
+rm -f /Library/LaunchDaemons/de.bernhard-baehr.sleepwatcher.plist &>/dev/null
+rm -f /etc/rc.sleep /etc/rc.wakeup &>/dev/null
+rm -fr /Library/Application\ Support/offWiFiSleep &>/dev/null
 
-/bin/launchctl unload -w /Library/LaunchDaemons/com.github.TonyLiu2ca.offWiFiSleep.plist 1>&- 2>&1
+/bin/launchctl unload -w /Library/LaunchDaemons/com.github.TonyLiu2ca.offWiFiSleep.plist &>/dev/null
 chmod 644 /Library/LaunchDaemons/com.github.TonyLiu2ca.offWiFiSleep.plist
 chown root:wheel /Library/LaunchDaemons/com.github.TonyLiu2ca.offWiFiSleep.plist
-/bin/launchctl load -w /Library/LaunchDaemons/com.github.TonyLiu2ca.offWiFiSleep.plist 1>&- 2>&1
+/bin/launchctl load -w /Library/LaunchDaemons/com.github.TonyLiu2ca.offWiFiSleep.plist &>/dev/null
 exit 0
